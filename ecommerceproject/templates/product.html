@@ -23,7 +23,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-md-12 col-sm-12">
-      <img src="{{product.image.url}}" alt="{{product.name}}" height="500px">
+      <img src="{{product.image.url}}" alt="{{product.name}}" height="350px" width="350px">
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
       <h4 class="text-uppercase my_prod_title">{{product.name}}</h4><hr>
@@ -33,7 +33,7 @@
       {% if product.stock <= 0 %}
         <p><strong>Out Of Stock</strong></p>
       {% else %}
-        <a class="btn btn-success" href="{% url 'cart:add_cart' product.id %}">Add To Cart</a>
+        <a class="btn btn-success mb-3" href="{% url 'cart:add_cart' product.id %}">Add To Cart</a>
       {% endif %}
     </div>
   </div>
