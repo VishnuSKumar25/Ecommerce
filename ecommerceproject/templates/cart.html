@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    Cart Page - Proceed To Review Your Items And Place The Order
+{% endblock %}
+
+{% block title %}
+    Cart - ClickToCart
+{% endblock %}
+
+{% block content %}
+  {% if not cart_items %}
+    <div>
+      <div class="text-center">
+        <br>
+        <h1 class="text-center">Your Shopping Cart Is Empty</h1><br>
+        <p class="text-center">Please Click <a href="{% url 'shop:allProdCat' %}">Here</a> To Continue Shopping</p>
+      </div>
+    </div>
+  {% else %}
+    <div class="container-fluid">
+      <div class="text-center">
+        <br>
+        <h1 class="text-center">Your Shopping Cart</h1><br>
+      </div>
+      <div class="row mx-auto">
+        <div class="col-lg-8 col-md-12 text-center">
+          <table class="table">
+            <thead class="my_thead">
+            <tr>
+              <th colspan="5">Your Items</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cart_item in cart_items %}
+              <tr>
+                <td>
+                  <a href="cart_item.product.get_absolute_url"><img src="{{cart_item.product.image.url}}" height="150px"></a>
+                </td>
+                <td class="text-start">
+                  {{cart_item.product.name}}<br>
+                  SKU: {{cart_item.product.id}}<br>
+                  Price: ₹ {{cart_item.product.price}}<br>
+                  Qty: {{cart_item.quantity}} x ₹ {{cart_item.product.price}}
+                </td>
+                <td>
+                  ₹ {{cart_item.sub_total}}
+                </td>
+                {% if cart_item.quantity < cart_item.product.stock %}
+                <td>
+                  <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="text-decoration-none"><i class="fa-solid fa-circle-plus custom_icon"></i></a>
+                  &nbsp;<a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="text-decoration-none"><i class="fa-solid fa-circle-minus  custom_icon"></i></a>
+                  <a href="{% url 'cart:cart_delete' cart_item.product.id %}" class="text-decoration-none"><i class="fa-solid fa-trash custom_icon"></i></a>
+                </td>
+                {% else %}
+                <td>
+                  &nbsp;<a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="text-decoration-none"><i class="fa-solid fa-circle-minus  custom_icon"></i></a>
+                  &nbsp;<a href="{% url 'cart:cart_delete' cart_item.product.id %}" class="text-decoration-none"><i class="fa-solid fa-trash custom_icon"></i></a>
+                </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="col-lg-4 col-md-12 text-center">
+          <table class="table">
+            <thead class="my_thead">
+            <tr>
+              <th>
+                Checkout
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                Please review your shopping cart items before proceeding with the order payment.
+              </td>
+            </tr>
+            <tr>
+              <td class="text-left">
+                Your Total:&nbsp; <strong>₹ {{total}}</strong>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="mx-auto">
+            <a href="{% url 'shop:allProdCat' %}" class="btn btn-primary btn-block mt-1">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

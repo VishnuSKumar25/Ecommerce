@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    Welcome to Click To Cart for a nice online shopping experience...
+{% endblock %}
+
+{% block title %}
+    Search Page
+{% endblock %}
+
+{% block content %}
+    <div>
+        <p class="text-center pt-4">You have searched for: <b>"{{query}}"</b></p>
+    </div>
+<div class="container">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3 col-sm-12 mb-3">
+                <div class="card">
+
+                    <img src="{{product.image.url}}" class="card-img-top" alt="{{product.name}}" height="250px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <h6 class="card-text">Price: ₹{{product.price}}</h6>
+                        <a href="{{product.get_url}}" class="btn btn-primary">View Product</a>
+                    </div>
+
+                </div>
+            </div>
+
+            {% empty %}
+                <div class="row mx-auto">
+                    <p class="text-center pt-4">0 results found</p>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
